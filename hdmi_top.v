@@ -7,11 +7,11 @@ Description	:This is top-level module for AXI Framebuffer to HDMI 1.4 Video Outp
 		 Video Timing Generator, TMDS Encoder, and a Clocking Wizard.
 ----------------------------------------------------------------------------------------------------------*/
 
-`include "clock_generator.v"
-`include "axi4stream_to_rgb.v"
-`include "axi_lite_slave.v"
-`include "tdms_encoder.v"
-`include "video_timing_generator.v"
+//`include "clock_generator.v"
+//`include "axi4stream_to_rgb.v"
+//`include "axi_lite_slave.v"
+//`include "tdms_encoder.v"
+//`include "video_timing_generator.v"
 
 `timescale 1ns / 1ps
 module hdmi_top
@@ -27,65 +27,65 @@ module hdmi_top
     // --------------------------------------------------------------------
     // System Inputs
     // --------------------------------------------------------------------
-    input  reg                    sys_clk_p,      			// Differential System Clock Input (e.g., 125 MHz for Pynq-Z1)
-    input  reg                    sys_clk_n,
-    input  reg                    sys_rst_n,      			// Active Low System Reset
+    input                      sys_clk_p,      			// Differential System Clock Input (e.g., 125 MHz for Pynq-Z1)
+    input                      sys_clk_n,
+    input                      sys_rst_n,      			// Active Low System Reset
 
     // --------------------------------------------------------------------
     // AXI4-Lite Slave Interface (for control and configuration)
     // Connects to the Zynq's PS or another AXI Master
     // --------------------------------------------------------------------
-    input  reg                    S_AXI_ACLK,
-    input  reg                    S_AXI_ARESETN,
-    input  reg [C_S_AXI_ADDR_WIDTH-1:0]               S_AXI_AWADDR,
-    input  reg [2:0]                                  S_AXI_AWPROT,
-    input  reg                                        S_AXI_AWVALID,
-    output reg                                        S_AXI_AWREADY,
-    input  reg [C_S_AXI_DATA_WIDTH-1:0]               S_AXI_WDATA,
-    input  reg [C_S_AXI_DATA_WIDTH/8-1:0]             S_AXI_WSTRB,
-    input  reg                                        S_AXI_WVALID,
-    output reg                                        S_AXI_WREADY,
-    output reg [1:0]                                  S_AXI_BRESP,
-    output reg                                        S_AXI_BVALID,
-    input  reg                                        S_AXI_BREADY,
-    input  reg [C_S_AXI_ADDR_WIDTH-1:0]               S_AXI_ARADDR,
-    input  reg [2:0]                                  S_AXI_ARPROT,
-    input  reg                                        S_AXI_ARVALID,
-    output reg                                        S_AXI_ARREADY,
-    output reg [C_S_AXI_DATA_WIDTH-1:0]               S_AXI_RDATA,
-    output reg [1:0]                                  S_AXI_RRESP,
-    output reg                                        S_AXI_RVALID,
-    input  reg                                        S_AXI_RREADY,
+    input                      S_AXI_ACLK,
+    input                      S_AXI_ARESETN,
+    input   [C_S_AXI_ADDR_WIDTH-1:0]               S_AXI_AWADDR,
+    input   [2:0]                                  S_AXI_AWPROT,
+    input                                          S_AXI_AWVALID,
+    output                                         S_AXI_AWREADY,
+    input   [C_S_AXI_DATA_WIDTH-1:0]               S_AXI_WDATA,
+    input   [C_S_AXI_DATA_WIDTH/8-1:0]             S_AXI_WSTRB,
+    input                                          S_AXI_WVALID,
+    output                                         S_AXI_WREADY,
+    output  [1:0]                                  S_AXI_BRESP,
+    output                                         S_AXI_BVALID,
+    input                                          S_AXI_BREADY,
+    input   [C_S_AXI_ADDR_WIDTH-1:0]               S_AXI_ARADDR,
+    input   [2:0]                                  S_AXI_ARPROT,
+    input                                          S_AXI_ARVALID,
+    output                                         S_AXI_ARREADY,
+    output  [C_S_AXI_DATA_WIDTH-1:0]               S_AXI_RDATA,
+    output  [1:0]                                  S_AXI_RRESP,
+    output                                         S_AXI_RVALID,
+    input                                          S_AXI_RREADY,
 
     // --------------------------------------------------------------------
     // AXI4-Stream Slave Interface (for incoming video pixel data)
     // Connects to an AXI4-Stream Video Source (e.g., VDMA, video test pattern generator)
     // --------------------------------------------------------------------
-    input  reg                    		      M_AXIS_ACLK,
-    input  reg                    		      M_AXIS_ARESETN,
-    input  reg [C_M_AXIS_TDATA_WIDTH-1:0]             M_AXIS_TDATA,
-    input  reg                                        M_AXIS_TVALID,
-    output reg                                        M_AXIS_TREADY,
-    input  reg                                        M_AXIS_TLAST,
+    input                      		      M_AXIS_ACLK,
+    input                      		      M_AXIS_ARESETN,
+    input   [C_M_AXIS_TDATA_WIDTH-1:0]             M_AXIS_TDATA,
+    input                                          M_AXIS_TVALID,
+    output                                        M_AXIS_TREADY,
+    input                                          M_AXIS_TLAST,
 
     // --------------------------------------------------------------------
     // HDMI TMDS Outputs (Physical Pins to HDMI Connector)
     // --------------------------------------------------------------------
-    output reg                        tmds_clk_p,
-    output reg                        tmds_clk_n,
-    output reg                        tmds_ch0_p, 			// Data Channel 0 (Blue)
-    output reg                        tmds_ch0_n,
-    output reg                        tmds_ch1_p, 			// Data Channel 1 (Green)
-    output reg                        tmds_ch1_n,
-    output reg                        tmds_ch2_p, 			// Data Channel 2 (Red)
-    output reg                        tmds_ch2_n,
+    output                         tmds_clk_p,
+    output                         tmds_clk_n,
+    output                         tmds_ch0_p, 			// Data Channel 0 (Blue)
+    output                         tmds_ch0_n,
+    output                         tmds_ch1_p, 			// Data Channel 1 (Green)
+    output                         tmds_ch1_n,
+    output                         tmds_ch2_p, 			// Data Channel 2 (Red)
+    output                         tmds_ch2_n,
 
     // --------------------------------------------------------------------
     // DDC (Display Data Channel)
     // --------------------------------------------------------------------
-    output reg                        scl_ddc,    // Clock
-    input  reg                        sda_ddc,    // Data 
-    input  reg                        hpd_in      // Hot-Plug Detect Input
+    output                         scl_ddc,    // Clock
+    input                          sda_ddc,    // Data 
+    input                          hpd_in      // Hot-Plug Detect Input
 
 );
 
@@ -94,33 +94,34 @@ module hdmi_top
     // --------------------------------------------------------------------
 
     // Clock and Reset Signals from Clocking Wizard
-    reg clk_74m25_pixel;  						// Pixel clock for 720p/60Hz (74.25 MHz)
-    reg clk_371m25_tmds;  						// TMDS clock (5x pixel clock, 371.25 MHz)
-    reg locked;           						// PLL lock status
+    wire clk_74m25_pixel;  						// Pixel clock for 720p/60Hz (74.25 MHz)
+    wire clk_371m25_tmds;  						// TMDS clock (5x pixel clock, 371.25 MHz)
+    wire locked;           						// PLL lock status
     reg rst_n_int;        						// Internal synchronized reset
 
     // AXI-Lite Register Outputs (to VTG)
-    reg [C_S_AXI_DATA_WIDTH-1:0] ctrl_reg;
-    reg [C_S_AXI_DATA_WIDTH-1:0] h_active_reg_val;
-    reg [C_S_AXI_DATA_WIDTH-1:0] v_active_reg_val;
-    reg [C_S_AXI_DATA_WIDTH-1:0] h_total_reg_val;
-    reg [C_S_AXI_DATA_WIDTH-1:0] v_total_reg_val;
-    reg [C_S_AXI_DATA_WIDTH-1:0] h_sync_start_reg_val;
-    reg [C_S_AXI_DATA_WIDTH-1:0] h_sync_end_reg_val;
-    reg [C_S_AXI_DATA_WIDTH-1:0] v_sync_start_reg_val;
-    reg [C_S_AXI_DATA_WIDTH-1:0] v_sync_end_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] ctrl_reg;
+    wire [C_S_AXI_DATA_WIDTH-1:0] h_active_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] v_active_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] h_total_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] v_total_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] h_sync_start_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] h_sync_end_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] v_sync_start_reg_val;
+    wire [C_S_AXI_DATA_WIDTH-1:0] v_sync_end_reg_val;
 
     // Video Timing Generator Outputs (to TMDS Encoder)
-    reg hsync_vtg;
-    reg vsync_vtg;
-    reg de_vtg;
+    wire hsync_vtg;
+    wire vsync_vtg;
+    wire de_vtg;
 
     // AXI4-Stream to RGB Converter Outputs
-    reg [7:0] rgb_r_from_stream;
-    reg [7:0] rgb_g_from_stream;
-    reg [7:0] rgb_b_from_stream;
-    reg pixel_valid_from_stream; 					// Indicates active pixel from stream
+    wire [7:0] rgb_r_from_stream;
+    wire [7:0] rgb_g_from_stream;
+    wire [7:0] rgb_b_from_stream;
+    wire pixel_valid_from_stream; 					// Indicates active pixel from stream
 
+    
     // Synchronizing global reset to pixel clock domain
     always @(posedge clk_74m25_pixel or negedge sys_rst_n) 
     begin
@@ -138,14 +139,14 @@ module hdmi_top
     // Clocking Wizard IP (clk_wiz_0) - PLL/MMCM
     // Generates 74.25 MHz pixel clock and 371.25 MHz TMDS clock from sys_clk.
     // --------------------------------------------------------------------
-    clk_gen clk_inst (
+    /*clk_gen_tb clk_inst (
         .clk_out1 (clk_74m25_pixel), 					// Output pixel clock (e.g., 74.25 MHz for 720p)
         .clk_out2 (clk_371m25_tmds), 					// Output TMDS clock (e.g., 371.25 MHz for 720p)
         .reset    (~sys_rst_n),      					// Active high reset for PLL
         .locked   (locked),          					// PLL lock status
         .clk_in1_p(sys_clk_p),       					// Differential input clock
         .clk_in1_n(sys_clk_n)	
-    );
+    );*/
 
     // --------------------------------------------------------------------
     // AXI4-Lite Slave Instance
@@ -253,12 +254,34 @@ module hdmi_top
         .tmds_clk_p         (tmds_clk_p),
         .tmds_clk_n         (tmds_clk_n)
     );
+    
+    reg [25:0] tick_div = 26'd0;
+    reg [15:0] frame_count = 16'd0;
 
+    always @(posedge sys_clk_p) begin
+        tick_div <= tick_div + 26'd1;
+
+        // Change number about once per ~0.5 s if clk ≈ 100 MHz
+        if (tick_div == 26'd50_000_000) begin
+            tick_div    <= 26'd0;
+            frame_count <= frame_count + 16'd1;
+        end
+    end
+    assign led = frame_count[9:0];
+    // Instantiate the 4-digit driver
+    seven_seg_4digit u_sevenseg (
+    .clk    (sys_clk_p),     // or a buffered system clock
+    .led    (led),
+    .value  (frame_count),
+    .seg_an (seg_an),
+    .seg_cat(seg_cat)
+    );
     // --------------------------------------------------------------------
     // DDC (Display Data Channel) and HPD Connections
     // --------------------------------------------------------------------
     assign scl_ddc = 1'b0; 
    // assign sda_ddc = 1'bz; 
+   
 
     
 endmodule
